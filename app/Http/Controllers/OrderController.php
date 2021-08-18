@@ -6,6 +6,7 @@ use App\Models\Driver;
 use App\Models\Order;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class OrderController extends Controller
 {
@@ -29,7 +30,9 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('Order.create_order',["title" => "Order"]);
+        $vehicle = Vehicle::all();
+        $driver = Driver::all();
+        return view('Order.create_order',compact('driver','vehicle'),["title" => "Order"]);
     }
 
     /**
@@ -40,7 +43,12 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'drivers_id' => 'required',
+            'vehicles_id' => 'required'
+        ]);
+        Order::create($request->all());
+        return redirect('/order')->with('status', 'Data Order Berhasil Ditambahkan!');
     }
 
     /**
@@ -49,9 +57,22 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function accept($id)
     {
-        //
+        $order = Order::find($id);
+        $order -> update([
+            'approval' => 'Accept'
+        ]);
+        return redirect('/order')->with('edit', 'Berhasil Validasi');
+    }
+
+    public function decline($id)
+    {
+        $order = Order::find($id);
+        $order -> update([
+            'approval' => 'Decline'
+        ]);
+        return redirect('/order')->with('edit', 'Berhasil Validasi');
     }
 
     /**
@@ -62,8 +83,10 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
+        $vehicle = Vehicle::all();
+        $driver = Driver::all();
         $order = Order::findorfail($id);
-        return view('Order.edit_order',compact('order'),["title" => "Order"]);
+        return view('Order.edit_order',compact('order','vehicle','driver'),["title" => "Order"]);
     }
 
     /**
@@ -75,7 +98,9 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::find($id);
+        $order -> update($request->all());
+        return redirect('/order')->with('edit', 'Data Order Berhasil Diubah!');
     }
 
     /**
@@ -86,6 +111,8 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $order = Order::findorfail($id);
+        $order->delete();
+        return back()->with('delete', 'Data Order Berhasil Dihapus!');
     }
 }

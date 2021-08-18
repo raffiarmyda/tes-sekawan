@@ -49,12 +49,13 @@
                     <option selected>- Pilih Role -</option>
                     <option value="Admin">Admin</option>
                     <option value="Manager">Manager</option>
+                    <option value="Master Admin">Master Admin</option>
                 </select>
             </div>
             <br>
             <div class="from-group">
                 <label for="password">Password</label>
-                <input type="text" name="password" class="form-control @error('password') is-invalid @enderror"
+                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
                        id="password" placeholder="Masukkan Password" value="{{old('password')}}">
                 @error('password')
                 <div class="invalid-feedback">{{$messages='Password Tidak Boleh Kosong'}}</div>

@@ -15,18 +15,11 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('users_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+//            $table->foreignId('users_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('drivers_id')->constrained('drivers')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('vehicles_id')->constrained('vehicles')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('created_by');
-            $table->string('driver_name');
-            $table->string('driver_number');
-            $table->string('driver_license');
-            $table->string('vehicle_name');
-            $table->string('vehicle_type');
-            $table->string('vehicle_description');
-            $table->string('rent_company');
-            $table->string('approval');
+            $table->string('created_by')->nullable();
+            $table->string('approval')->nullable();
             $table->timestamps();
         });
     }
