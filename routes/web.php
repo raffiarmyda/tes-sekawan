@@ -23,7 +23,7 @@ Route::get('logout', function () {
     return redirect('/login');
 });
 
-Route::middleware('auth')->group(function(){
+Route::middleware('login')->group(function(){
 
 Route::get('/', function () {
     return view('home', ["title" => "Home"]);

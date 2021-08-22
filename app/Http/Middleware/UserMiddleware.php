@@ -17,21 +17,24 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() != 1) {
+        if(Auth::check() != 1){
             return redirect('/login');
         }
-        $user = Auth::User()->role;
-
-        if ($user == 'Master Admin') {
-
-        }
-        elseif ($user =='Admin')
-        {
-            if ($request->is('*user*') || $request->is('*order*')) {
+        $role = Auth::user()->role;
+        if($role == 'Admin'){
+            if($request->is('*user*') || $request->is('*driver*') || $request->is('*vehicle*')){
                 return redirect('/home')->with('danger', 'Anda Tidak Memiliki akses');
-
             }
+        }else if($role == 'Manager'){
+            if($request->is('*user*') || $request->is('*driver*') || $request->is('*vehicle*')){
+                return redirect('/home')->with('danger', 'Anda Tidak Memiliki akses');
+            }
+
         }
+        else if($role == 'Master Admin') {
+
+        }
+
         return $next($request);
     }
     }
