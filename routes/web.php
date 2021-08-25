@@ -28,9 +28,8 @@ Route::middleware('login')->group(function(){
 Route::get('/', function () {
     return view('home', ["title" => "Home"]);
 });
-Route::get('/home', function () {
-    return view('home', ["title" => "Home"]);
-});
+
+Route::get('/home', [\App\Http\Controllers\homeController::class, 'index']);
 
 Route::get('/user', [\App\Http\Controllers\UserController::class, 'index']);
 Route::get('/user/create_user', [\App\Http\Controllers\UserController::class, 'create']);

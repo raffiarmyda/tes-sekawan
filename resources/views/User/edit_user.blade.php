@@ -16,6 +16,7 @@
         </div>
         <form method="post" action="{{ url('update_user',$users->id) }}">
             @csrf
+            @method('put')
             <div class="from-group">
                 <label for="name">Nama</label>
                 <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name"

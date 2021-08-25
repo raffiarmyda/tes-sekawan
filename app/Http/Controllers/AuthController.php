@@ -9,7 +9,7 @@ class AuthController extends Controller
 {
     public function login(Request $request){
         if(Auth::attempt($request->only('username', 'password'))){
-            return redirect('home')->with('success', 'Login berhasil');
+            return redirect('home');
         }
         else{
             return redirect()->back()->with('gagal','* Harap Masukkan Username Dan Password Dengan Benar ');
