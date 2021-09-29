@@ -12,7 +12,7 @@ class homeController extends Controller
         $data = [];
         $categories = [];
         foreach ($orders as $or){
-            $categories[] = $or->witel;
+            $categories[] = $or->approval;
         }
         $order = Order::all()->groupBy('approval');
         foreach($order as $k=>$v){

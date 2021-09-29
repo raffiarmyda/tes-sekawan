@@ -25,9 +25,7 @@
             title: {
                 text: 'Daftar Pemesanan Kendaraan'
             },
-            subtitle: {
-                text: 'Source: WorldClimate.com'
-            },
+
             xAxis: {
                 categories: {!!json_encode(array_keys($data))!!},
                 crosshair: true
